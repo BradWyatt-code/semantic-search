@@ -5,7 +5,10 @@ A portfolio project demonstrating embeddings, vector search, and caching.
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
+from pathlib import Path
 import httpx
 import json
 import hashlib
@@ -136,9 +139,18 @@ def cache_key(text: str) -> str:
 
 # Endpoints
 
+# Get the directory where this file lives
+BASE_DIR = Path(__file__).resolve().parent
+
 @app.get("/")
 async def root():
-    """Root endpoint with API info."""
+    """Serve the frontend."""
+    return FileResponse(BASE_DIR / "static" / "index.html")
+
+
+@app.get("/api")
+async def api_info():
+    """API info endpoint."""
     return {
         "name": "RAG API",
         "version": "0.1.0",
