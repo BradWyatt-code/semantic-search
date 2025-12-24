@@ -35,6 +35,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Directory paths
+BASE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = BASE_DIR.parent
+
+# Mount static files (for images, favicon, etc.)
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+
 
 # Redis connection (lazy initialization)
 _redis_client = None
@@ -152,13 +159,34 @@ def cache_key(text: str) -> str:
 
 # Endpoints
 
-# Get the directory where this file lives
-BASE_DIR = Path(__file__).resolve().parent
-
 @app.get("/")
 async def root():
     """Serve the frontend."""
     return FileResponse(BASE_DIR / "static" / "index.html")
+
+
+@app.get("/favicon.ico")
+async def favicon():
+    """Serve favicon."""
+    favicon_path = BASE_DIR / "static" / "favicon.ico"
+    if favicon_path.exists():
+        return FileResponse(favicon_path)
+    return FileResponse(BASE_DIR / "static" / "favicon.png", media_type="image/png")
+
+
+@app.get("/README.md")
+async def readme():
+    """Serve README."""
+    return FileResponse(PROJECT_ROOT / "README.md", media_type="text/markdown")
+
+
+@app.get("/ENTERPRISE_USE_CASE.md")
+async def enterprise_use_case():
+    """Serve enterprise use case doc."""
+    file_path = PROJECT_ROOT / "ENTERPRISE_USE_CASE.md"
+    if file_path.exists():
+        return FileResponse(file_path, media_type="text/markdown")
+    return {"error": "File not found"}
 
 
 @app.get("/api")
