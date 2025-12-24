@@ -105,3 +105,13 @@ curl -X POST https://your-app.railway.app/search \
 - [ ] Implement document upload endpoint
 - [ ] Add authentication
 - [ ] Build frontend interface
+
+## Enterprise Architecture
+
+This project implements the semantic retrieval layer of a RAG system.
+
+While this deployment uses OpenAI embeddings and Redis for demonstration purposes,
+the architecture is designed to support fully on-prem enterprise environments
+(e.g. Windows domain file shares, on-prem Llama servers, PostgreSQL + pgvector).
+
+See [ENTERPRISE_USE_CASE.md](ENTERPRISE_USE_CASE.md) for details.
