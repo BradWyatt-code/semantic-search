@@ -76,9 +76,22 @@ class SearchResponse(BaseModel):
     query_cached: bool = False
 
 
-# In-memory document store (replace with vector DB later)
+# In-memory document store
 DOCUMENTS = [
-    "The desert holds memory in its stones, oil derricks standing sentinel.",
+    # Nok'so
+    "This forsaken land was my home, and I didn't know to call it Forsaken, until someone else taught me the word.",
+    "Today it is a distant memory, a fractured dream with a sunburn.",
+    "Fields stitched together with rusting oil wells, jackhammers bowing up and down like tired animals. The desert didn't have weather; it had moods. Mostly bad ones.",
+    "My favorite spot was beside a man-made hill— industrial waste piled high and left to calcify in the shape of a secret. Kids claim these things as kingdoms.",
+    "I looked up once, straight into the sun— stupid, reckless, customary. My eyes burned, but through the white heat I saw him.",
+    "The Falcon— fast enough that the world forgot its frame rate. Mysterious in the way a shadow is mysterious when it doesn't match the thing that cast it.",
+    "Nok'so… The name landed like heat behind the eyes. Hard to say what swaps places with you when the desert starts humming.",
+    "An old El Camino erupted over the waste-hill like a rusted comet with a bad attitude. It crashed exactly where I'd been standing.",
+    "The sort of moment that should have killed me, but didn't. The sort of moment that belongs to myth long before you know you're living one.",
+    "When the dust settled, the Falcon was gone. Or maybe just higher up, where children can't follow.",
+    "I kept running long after my lungs quit negotiating. Some instincts stay with you. Some debts, too.",
+    
+    # Character portals
     "She crossed from Los Angeles to New York, mythologies trailing behind her.",
     "Victorian parlors hide secrets in their wallpaper, whispered conversations.",
     "The fox spirit moves through city streets, ancient trickster in modern skin.",
@@ -279,9 +292,5 @@ async def semantic_search(
 
 
 if __name__ == "__main__":
-    import os
     import uvicorn
-
-    port = int(os.environ.get("PORT", "8000"))
-    uvicorn.run(app, host="0.0.0.0", port=port)
-
+    uvicorn.run(app, host="0.0.0.0", port=8000)
